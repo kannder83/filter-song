@@ -3,17 +3,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 # Database
-# from app.users.models import Base
-# from config.database import engine
+from app.models import Base
+from config.database import engine
 
 # Routes
-from app.routes import router as router_songs
+from app.routes.songs import router as router_songs
 
 
 def get_application():
 
     # create tables in database
-    # Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
     app = FastAPI(
         title="filter-song",

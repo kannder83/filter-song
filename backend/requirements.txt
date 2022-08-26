@@ -3,3 +3,4 @@ psycopg2==2.9.3
 python-dotenv==0.20.0
 SQLAlchemy==1.4.40
 uvicorn==0.18.3
+pandas==1.4.3
