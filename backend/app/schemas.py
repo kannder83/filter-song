@@ -1,14 +1,20 @@
-from pydantic import BaseModel, EmailStr, Field
-from datetime import datetime, date
+from pydantic import BaseModel, Field
 
 
-class Song(BaseModel):
+class SongOut(BaseModel):
     id: int
     artist: str
     song: str
-    duration_ms: int
-    explicit: str
     year: int
+    duration_ms: int
+    genre: str
+
+    class Config:
+        orm_mode = True
+
+
+class Song(SongOut):
+    explicit: str
     popularity: int
     danceability: float
     energy: float
@@ -22,18 +28,3 @@ class Song(BaseModel):
     valence: float
     tempo: float
     genre: str
-
-    class Config:
-        orm_mode = True
-
-
-class SongOut(BaseModel):
-    id: int
-    artist: str
-    song: str
-    year: int
-    duration_ms: int
-    genre: str
-
-    class Config:
-        orm_mode = True

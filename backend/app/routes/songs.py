@@ -37,7 +37,7 @@ def get_all_songs(
     path="/songs/{song_id}",
     status_code=status.HTTP_200_OK,
     summary="Show specific id song",
-    response_model=schemas.SongOut
+    response_model=schemas.Song
 )
 def get_song_by_id(
     song_id: int = Path(..., ge=1),
@@ -61,10 +61,12 @@ def get_song_by_id(
     path="/title/{song_name}",
     status_code=status.HTTP_200_OK,
     summary="Search a song by name or title",
-    # response_model=schemas.SongOut
+    response_model=list[schemas.SongOut]
 )
 def get_song_by_name(
     song_name: str,
+    skip: int = 0,
+    limit: int = 10,
     db: Session = Depends(get_db)
 ):
     """
@@ -72,10 +74,62 @@ def get_song_by_name(
     """
 
     song_by_name = db.query(models.Song).filter(
-        models.Song.song.like(f'%{song_name}%'))
+        models.Song.song.ilike(f'%{song_name}%')).offset(skip).limit(limit).all()
 
-    # if song_by_id is None:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_404_NOT_FOUND, detail=f"Song ID: {song_name} not found")
+    if song_by_name is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
     return song_by_name
+
+
+@router.get(
+    path="/artist/{artist_name}",
+    status_code=status.HTTP_200_OK,
+    summary="Search a song by artist name",
+    response_model=list[schemas.SongOut]
+)
+def get_song_by_name(
+    artist_name: str,
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(get_db)
+):
+    """
+    Returns a list of songs by artist name.
+    """
+
+    song_by_artist = db.query(models.Song).filter(
+        models.Song.artist.ilike(f'%{artist_name}%')).offset(skip).limit(limit).all()
+
+    if song_by_artist is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    return song_by_artist
+
+
+@router.get(
+    path="/genre/{musical_genre}",
+    status_code=status.HTTP_200_OK,
+    summary="Search a song by musical genre",
+    response_model=list[schemas.SongOut]
+)
+def get_song_by_name(
+    musical_genre: str,
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(get_db)
+):
+    """
+    Returns a list of songs by artist name.
+    """
+
+    song_by_genre = db.query(models.Song).filter(
+        models.Song.genre.ilike(f'%{musical_genre}%')).offset(skip).limit(limit).all()
+
+    if song_by_genre is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    return song_by_genre
