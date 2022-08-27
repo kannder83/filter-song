@@ -9,7 +9,8 @@ from app import models, schemas
 
 
 router = APIRouter(
-    tags=["Songs"]
+    tags=["Songs"],
+    prefix="/apiv1",
 )
 
 
@@ -80,6 +81,10 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
+    if len(song_by_name) is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by title")
+
     return song_by_name
 
 
@@ -106,6 +111,10 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
+    if len(song_by_artist) is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by artist name")
+
     return song_by_artist
 
 
@@ -131,5 +140,9 @@ def get_song_by_name(
     if song_by_genre is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    if len(song_by_genre) is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by genre")
 
     return song_by_genre

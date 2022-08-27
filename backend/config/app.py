@@ -12,7 +12,7 @@ def get_application():
         title="filter-song",
         description="Search the best songs",
         docs_url="/",
-        version="0.1.0"
+        version="0.1.0",
     )
 
     origins = ["*"]
