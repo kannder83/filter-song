@@ -28,3 +28,12 @@ class Song(SongOut):
     valence: float
     tempo: float
     genre: str
+
+
+class Register(BaseModel):
+    rows: int
+    pages: int
+    rows_per_page: int
+    initial_id: int
+    last_id: int
+    data: list[SongOut]

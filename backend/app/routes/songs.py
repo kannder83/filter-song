@@ -3,6 +3,8 @@ from fastapi import Response, status, HTTPException, Depends, APIRouter, Path
 from sqlalchemy.orm import Session
 from config.database import get_db
 
+from app.utils import RegisterSong
+
 
 # Models and Schemas
 from app import models, schemas
@@ -29,9 +31,26 @@ def get_all_songs(
     Returns all songs.
     """
 
+    count_all_songs = db.query(models.Song).count()
+
+    if count_all_songs is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
     all_songs = db.query(models.Song).offset(skip).limit(limit).all()
 
-    return all_songs
+    if all_songs is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
+    if len(all_songs) is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
+    out_registers = RegisterSong(
+        count_all_songs, limit, skip, all_songs)
+
+    return out_registers.data
 
 
 @router.get(
@@ -74,18 +93,28 @@ def get_song_by_name(
     Returns a list of songs by title or name.
     """
 
-    song_by_name = db.query(models.Song).filter(
-        models.Song.song.ilike(f'%{song_name}%')).offset(skip).limit(limit).all()
+    count_songs_by_name = db.query(models.Song).filter(
+        models.Song.song.ilike(f'%{song_name}%')).count()
 
-    if song_by_name is None:
+    if count_songs_by_name is 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
-    if len(song_by_name) is 0:
+    songs_by_name = db.query(models.Song).filter(
+        models.Song.song.ilike(f'%{song_name}%')).offset(skip).limit(limit).all()
+
+    if songs_by_name is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    if len(songs_by_name) is 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by title")
 
-    return song_by_name
+    out_registers = RegisterSong(
+        count_songs_by_name, limit, skip, songs_by_name)
+
+    return out_registers.data
 
 
 @router.get(
@@ -104,18 +133,28 @@ def get_song_by_name(
     Returns a list of songs by artist name.
     """
 
-    song_by_artist = db.query(models.Song).filter(
-        models.Song.artist.ilike(f'%{artist_name}%')).offset(skip).limit(limit).all()
+    count_songs_by_artist = db.query(models.Song).filter(
+        models.Song.artist.ilike(f'%{artist_name}%')).count()
 
-    if song_by_artist is None:
+    if count_songs_by_artist is 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
-    if len(song_by_artist) is 0:
+    songs_by_artist = db.query(models.Song).filter(
+        models.Song.artist.ilike(f'%{artist_name}%')).offset(skip).limit(limit).all()
+
+    if songs_by_artist is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    if len(songs_by_artist) is 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by artist name")
 
-    return song_by_artist
+    out_registers = RegisterSong(
+        count_songs_by_artist, limit, skip, songs_by_artist)
+
+    return out_registers.data
 
 
 @router.get(
@@ -134,15 +173,61 @@ def get_song_by_name(
     Returns a list of songs by artist name.
     """
 
-    song_by_genre = db.query(models.Song).filter(
-        models.Song.genre.ilike(f'%{musical_genre}%')).offset(skip).limit(limit).all()
+    count_songs_by_name = db.query(models.Song).filter(
+        models.Song.genre.ilike(f'%{musical_genre}%')).count()
 
-    if song_by_genre is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
-
-    if len(song_by_genre) is 0:
+    if count_songs_by_name is 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by genre")
 
-    return song_by_genre
+    songs_by_genre = db.query(models.Song).filter(
+        models.Song.genre.ilike(f'%{musical_genre}%')).offset(skip).limit(limit).all()
+
+    if songs_by_genre is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
+
+    if len(songs_by_genre) is 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by genre")
+
+    out_registers = RegisterSong(
+        count_songs_by_name, limit, skip, songs_by_genre)
+
+    return out_registers.data
+
+
+# @router.get(
+#     path="/index",
+#     status_code=status.HTTP_200_OK,
+#     summary="Show all index",
+#     response_model=schemas.Register
+# )
+# def get_all_songs(
+#     skip: int = 0,
+#     limit: int = 10,
+#     db: Session = Depends(get_db)
+# ):
+#     """
+#     Returns all index.
+#     """
+
+#     count_all_rows = db.query(models.Song).count()
+
+#     if count_all_rows is 0:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
+#     data = db.query(models.Song).offset(skip).limit(limit).all()
+
+#     if data is None:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
+#     if len(data) is 0:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
+
+#     out_registers = RegisterSong(count_all_rows, limit, skip, data)
+
+#     return out_registers.get_data()
