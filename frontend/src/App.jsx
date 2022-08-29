@@ -14,7 +14,7 @@ function App() {
       <div className="w-full h-[6vh]">
         <Navbar />
       </div>
-      <div className="w-full h-[88vh] flex flex-col justify-center items-center">
+      <div className="w-full min-h-[88vh] p-1 flex flex-col justify-center items-center">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/library" element={<Library />} />

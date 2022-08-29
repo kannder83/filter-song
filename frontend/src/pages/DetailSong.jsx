@@ -41,7 +41,7 @@ const DetailSong = () => {
   }, []);
 
   return (
-    <div className="container p-2 rounded-md gap-2 flex flex-col justify-center items-center bg-slate-400/90 shadow-md">
+    <div className="container p-2 rounded-md gap-2 flex flex-col justify-center items-center bg-green-800/30 shadow-md">
       <Title title="Detail Song" />
       {!errors.isErrors && (
         <table className="w-10/12">
@@ -57,13 +57,22 @@ const DetailSong = () => {
           </tbody>
         </table>
       )}
+      <div className="w-full flex justify-around">
+        <Link
+          className=" px-2 py-1 text-center bg-gray-500 hover:bg-gray-600 transition-all delay-75 rounded-md"
+          to="/library"
+        >
+          Back to Library
+        </Link>
 
-      <Link
-        className="w-1/12 px-2 py-1 text-center bg-gray-500 hover:bg-gray-600 transition-all delay-75 rounded-md"
-        to="/find"
-      >
-        Back
-      </Link>
+        <Link
+          className=" px-2 py-1 text-center bg-gray-500 hover:bg-gray-600 transition-all delay-75 rounded-md"
+          to="/find"
+        >
+          Go to Search
+        </Link>
+      </div>
+
       <Errors errors={errors} />
     </div>
   );

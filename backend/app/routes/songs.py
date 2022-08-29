@@ -20,7 +20,7 @@ router = APIRouter(
     path="/songs",
     status_code=status.HTTP_200_OK,
     summary="Show all songs",
-    response_model=list[schemas.SongOut]
+    # response_model=schemas.Register
 )
 def get_all_songs(
     skip: int = 0,
@@ -50,7 +50,7 @@ def get_all_songs(
     out_registers = RegisterSong(
         count_all_songs, limit, skip, all_songs)
 
-    return out_registers.data
+    return out_registers.get_data()
 
 
 @router.get(
