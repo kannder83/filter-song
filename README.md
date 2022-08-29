@@ -50,4 +50,4 @@ genre = Column(String(255), nullable=False)
 e. Si alguna funcionalidad no se completó para la prueba, mencionar que cree
 que pudo ocurrir
 
-- Se implemento las funcionalies solicitadas, sin embargo hay un bug al recorrer la lista de las caciones en la página de librery.
+- Se implemento las funcionalies solicitadas, sin embargo hay un bug al recorrer la lista de las caciones en la página de [http://localhost:3000/library](library).
