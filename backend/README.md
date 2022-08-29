@@ -1,14 +1,15 @@
 # Backend
 
-Este backend usa las sigueintes tecnologias:
+Este backend usa las sigueintes tecnologías:
 
+- Python
 - Docker
 - Framework: FastAPI
 - Base de datos: Postgres
 
 ## Correr Backend:
 
-- Crear achirvo .env con la siguiente información
+- Crear un archivo ".env" con la siguiente información:
 
 ```
 DATABASE_HOSTNAME=postgres
@@ -42,4 +43,4 @@ python3 copy_csv_to_db.py
 
 [http://localhost:8000](http://localhost:8000)
 
-- El uso de las API se encuntra detallado en el Swagger.
+- El uso de las API se encuentra detallado en el Swagger.
