@@ -27,7 +27,7 @@ ALLOWED_HOSTS=localhost:8000
 
 ```py
 #Correr el contenedor:
-docker-compose -f developer.yml up
+docker-compose -f developer.yml up -d
 
 # Ingresar al contenedor:
 docker exec -it dev_api_songs bash
