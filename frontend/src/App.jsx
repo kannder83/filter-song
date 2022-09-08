@@ -5,6 +5,7 @@ import { Library } from "./pages/Library";
 import { Find } from "./pages/Find";
 import { About } from "./pages/About";
 import { DetailSong } from "./pages/DetailSong";
+import { Playlist } from "./pages/Playlist";
 import { Navbar } from "./components/Nabvar";
 import { Footer } from "./components/Footer";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/library/:songId" element={<DetailSong />} />
           <Route path="/find" element={<Find />} />
           <Route path="/about" element={<About />} />
+          <Route path="/playlist" element={<Playlist />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </div>

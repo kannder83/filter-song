@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import { useEffect } from "react";
 
 const initialState = () => ({
   countPages: 1,
@@ -41,17 +42,21 @@ const IndexPage = ({ pageIndex, getAllSongs }) => {
       maxCount: pageIndex.pages,
       incrementBy: pageIndex.rows_per_page,
     });
-    getAllSongs(state.incrementBy, 10);
+    // getAllSongs(state.incrementBy, 10);
   };
 
   const decrement = () => {
-    getAllSongs(state.incrementBy, 10);
+    // getAllSongs(state.incrementBy, 10);
     dispatch({
       type: "PREVIOUS_PAGE",
       maxCount: pageIndex.pages,
       incrementBy: pageIndex.rows_per_page,
     });
   };
+
+  useEffect(() => {
+    getAllSongs(state.incrementBy);
+  }, [state]);
 
   return (
     <div className="w-full">
