@@ -6,7 +6,6 @@ const Playlist = () => {
   const [pageIndex, setPageIndex] = useState({});
 
   const increment = () => {
-    // console.log("ingreso...");
     setCount(count + 10);
     console.log("setcount: ", count);
     getAllSongs(count);
@@ -25,7 +24,6 @@ const Playlist = () => {
   };
 
   const getAllSongs = (skip = 0, limit = 10) => {
-    // console.log("skip: ", skip);
     get(`/songs?skip=${skip}&limit=${limit}`)
       .then((result) => {
         setPageIndex({
@@ -43,7 +41,6 @@ const Playlist = () => {
   };
 
   useEffect(() => {
-    console.log("useefect:", count);
     getAllSongs(count);
   }, [count]);
 
