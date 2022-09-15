@@ -46,8 +46,3 @@ genre = Column(String(255), nullable=False)
 - Se utilizó el siguiente dataset:
 
 [Top Hits Spotify from 2000-2019](https://www.kaggle.com/datasets/paradisejoy/top-hits-spotify-from-20002019)
-
-e. Si alguna funcionalidad no se completó para la prueba, mencionar que cree
-que pudo ocurrir
-
-- Se implemento las funcionalies solicitadas, sin embargo hay un bug al recorrer la lista de las caciones en la página de [http://localhost:3000/library](library).

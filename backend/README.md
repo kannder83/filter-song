@@ -9,19 +9,7 @@ Este backend usa las sigueintes tecnologías:
 
 ## Correr Backend:
 
-- Crear un archivo ".env" con la siguiente información:
-
-```
-DATABASE_HOSTNAME=postgres
-DATABASE_PORT=5432
-DATABASE_PASSWORD=ComplexPass11##
-DATABASE_NAME=songs_db
-DATABASE_USERNAME=postgres
-POSTGRES_PASSWORD=ComplexPass11##
-POSTGRES_DB=songs_db
-DEBUG=True
-ALLOWED_HOSTS=localhost:8000
-```
+- Crear un archivo ".env" teniendo como referencia el archivo "example.env".
 
 - Ejecutar las siguientes lineas manualmente:
 
@@ -32,10 +20,7 @@ docker-compose -f developer.yml up -d
 # Ingresar al contenedor:
 docker exec -it dev_api_songs bash
 
-# Ejecutar achivo para crear las tablas en la base de datos:
-python3 create_tables.py
-
-# Ejecutar archivo para copiar el CSV a la BD:
+# Ejecutar achivo para crear las tablas en la base de datos y copiar los datos a la BD:
 python3 copy_csv_to_db.py
 ```
 

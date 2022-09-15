@@ -22,7 +22,7 @@ const Search = ({ setSongs }) => {
     }
     get(URL)
       .then((result) => {
-        setSongs(result);
+        setSongs(result["data"]);
         setErrors({
           isErrors: false,
           errors: "",

@@ -13,7 +13,7 @@ Se utilizo las siguientes tecnologias:
 - Tener instalado:
 
 ```
-nodejs --version
+nodejs
 ```
 
 - Instalar las dependencias

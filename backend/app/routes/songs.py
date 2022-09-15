@@ -1,8 +1,9 @@
-
 from fastapi import Response, status, HTTPException, Depends, APIRouter, Path
 from sqlalchemy.orm import Session
+from sqlalchemy import exc
 from config.database import get_db
 
+# Utils
 from app.utils import RegisterSong
 
 
@@ -20,7 +21,7 @@ router = APIRouter(
     path="/songs",
     status_code=status.HTTP_200_OK,
     summary="Show all songs",
-    # response_model=schemas.Register
+    response_model=schemas.Register
 )
 def get_all_songs(
     skip: int = 0,
@@ -31,7 +32,11 @@ def get_all_songs(
     Returns all songs.
     """
 
-    count_all_songs = db.query(models.Song).count()
+    try:
+        count_all_songs = db.query(models.Song).count()
+    except exc.SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
     if count_all_songs is 0:
         raise HTTPException(
@@ -67,8 +72,12 @@ def get_song_by_id(
     Returns a specific data of ID.
     """
 
-    song_by_id = db.query(models.Song).filter(
-        models.Song.id == song_id).first()
+    try:
+        song_by_id = db.query(models.Song).filter(
+            models.Song.id == song_id).first()
+    except exc.SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
     if song_by_id is None:
         raise HTTPException(
@@ -81,7 +90,7 @@ def get_song_by_id(
     path="/title/{song_name}",
     status_code=status.HTTP_200_OK,
     summary="Search a song by name or title",
-    response_model=list[schemas.SongOut]
+    response_model=schemas.Register
 )
 def get_song_by_name(
     song_name: str,
@@ -93,8 +102,12 @@ def get_song_by_name(
     Returns a list of songs by title or name.
     """
 
-    count_songs_by_name = db.query(models.Song).filter(
-        models.Song.song.ilike(f'%{song_name}%')).count()
+    try:
+        count_songs_by_name = db.query(models.Song).filter(
+            models.Song.song.ilike(f'%{song_name}%')).count()
+    except exc.SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
     if count_songs_by_name is 0:
         raise HTTPException(
@@ -114,14 +127,14 @@ def get_song_by_name(
     out_registers = RegisterSong(
         count_songs_by_name, limit, skip, songs_by_name)
 
-    return out_registers.data
+    return out_registers.get_data()
 
 
 @router.get(
     path="/artist/{artist_name}",
     status_code=status.HTTP_200_OK,
     summary="Search a song by artist name",
-    response_model=list[schemas.SongOut]
+    response_model=schemas.Register
 )
 def get_song_by_name(
     artist_name: str,
@@ -133,8 +146,12 @@ def get_song_by_name(
     Returns a list of songs by artist name.
     """
 
-    count_songs_by_artist = db.query(models.Song).filter(
-        models.Song.artist.ilike(f'%{artist_name}%')).count()
+    try:
+        count_songs_by_artist = db.query(models.Song).filter(
+            models.Song.artist.ilike(f'%{artist_name}%')).count()
+    except exc.SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
     if count_songs_by_artist is 0:
         raise HTTPException(
@@ -154,14 +171,14 @@ def get_song_by_name(
     out_registers = RegisterSong(
         count_songs_by_artist, limit, skip, songs_by_artist)
 
-    return out_registers.data
+    return out_registers.get_data()
 
 
 @router.get(
     path="/genre/{musical_genre}",
     status_code=status.HTTP_200_OK,
     summary="Search a song by musical genre",
-    response_model=list[schemas.SongOut]
+    response_model=schemas.Register
 )
 def get_song_by_name(
     musical_genre: str,
@@ -170,11 +187,15 @@ def get_song_by_name(
     db: Session = Depends(get_db)
 ):
     """
-    Returns a list of songs by artist name.
+    Returns a list of songs by genre.
     """
 
-    count_songs_by_name = db.query(models.Song).filter(
-        models.Song.genre.ilike(f'%{musical_genre}%')).count()
+    try:
+        count_songs_by_name = db.query(models.Song).filter(
+            models.Song.genre.ilike(f'%{musical_genre}%')).count()
+    except exc.SQLAlchemyError as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
     if count_songs_by_name is 0:
         raise HTTPException(
@@ -194,40 +215,4 @@ def get_song_by_name(
     out_registers = RegisterSong(
         count_songs_by_name, limit, skip, songs_by_genre)
 
-    return out_registers.data
-
-
-# @router.get(
-#     path="/index",
-#     status_code=status.HTTP_200_OK,
-#     summary="Show all index",
-#     response_model=schemas.Register
-# )
-# def get_all_songs(
-#     skip: int = 0,
-#     limit: int = 10,
-#     db: Session = Depends(get_db)
-# ):
-#     """
-#     Returns all index.
-#     """
-
-#     count_all_rows = db.query(models.Song).count()
-
-#     if count_all_rows is 0:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
-
-#     data = db.query(models.Song).offset(skip).limit(limit).all()
-
-#     if data is None:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
-
-#     if len(data) is 0:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
-
-#     out_registers = RegisterSong(count_all_rows, limit, skip, data)
-
-#     return out_registers.get_data()
+    return out_registers.get_data()
