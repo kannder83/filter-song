@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     database_username: str
     debug: str
     allowed_hosts: str
+    prod_port: int
 
     class Config:
         env_file = ".env"
