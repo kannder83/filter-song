@@ -38,7 +38,7 @@ def get_all_songs(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
-    if count_all_songs is 0:
+    if count_all_songs == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
 
@@ -48,7 +48,7 @@ def get_all_songs(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
 
-    if len(all_songs) is 0:
+    if len(all_songs) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not Found")
 
@@ -109,7 +109,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
-    if count_songs_by_name is 0:
+    if count_songs_by_name == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
@@ -120,7 +120,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
-    if len(songs_by_name) is 0:
+    if len(songs_by_name) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by title")
 
@@ -153,7 +153,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
-    if count_songs_by_artist is 0:
+    if count_songs_by_artist == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
@@ -164,7 +164,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
-    if len(songs_by_artist) is 0:
+    if len(songs_by_artist) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by artist name")
 
@@ -197,7 +197,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"something was wrong. Please try again later.")
 
-    if count_songs_by_name is 0:
+    if count_songs_by_name == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by genre")
 
@@ -208,7 +208,7 @@ def get_song_by_name(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Not found")
 
-    if len(songs_by_genre) is 0:
+    if len(songs_by_genre) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"No Match by genre")
 

@@ -16,12 +16,16 @@ Este backend usa las sigueintes tecnologías:
 ```py
 #Correr el contenedor:
 docker-compose -f developer.yml up -d
+```
 
+```py
 # Ingresar al contenedor:
 docker exec -it dev_api_songs bash
+```
 
+```py
 # Ejecutar achivo para crear las tablas en la base de datos y copiar los datos a la BD:
-python3 copy_csv_to_db.py
+python3 create_tables.py
 ```
 
 - Acceder a la URL para ver la documentación:
