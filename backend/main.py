@@ -15,7 +15,7 @@ def main():
             reload=True,
         )
     else:
-        run("gunicorn config.app:application -w 3 -b 0.0.0.0:8000 --worker-class uvicorn.workers.UvicornWorker".split(' '))
+        run("gunicorn config.app:application -w 1 -b 0.0.0.0:8000 --worker-class uvicorn.workers.UvicornWorker".split(' '))
 
 
 if __name__ == "__main__":

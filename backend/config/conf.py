@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     debug: str
     allowed_hosts: str
     prod_port: int
+    prod_url: str
 
     class Config:
         env_file = ".env"
