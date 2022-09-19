@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import exc
 from config.database import get_db
 
+
 # Utils
 from app.utils import RegisterSong
 
@@ -12,8 +13,7 @@ from app import models, schemas
 
 
 router = APIRouter(
-    tags=["Songs"],
-    prefix="/apiv1",
+    tags=["Songs"]
 )
 
 

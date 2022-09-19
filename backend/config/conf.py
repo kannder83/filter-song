@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     allowed_hosts: str
     prod_port: int
     prod_url: str
+    version: str
 
     class Config:
         env_file = ".env"

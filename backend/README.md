@@ -28,8 +28,24 @@ docker exec -it dev_api_songs bash
 python3 create_tables.py
 ```
 
+## Acceder a la Documentación API
+
 - Acceder a la URL para ver la documentación:
 
 [http://localhost:8000](http://localhost:8000)
 
 - El uso de las API se encuentra detallado en el Swagger.
+
+## Elimiar información
+
+Correr el siguiente comando
+
+```py
+docker-compose -f developer.yml down --remove-orphans -v
+```
+
+Para eliminar imagenes, contenedores, volumenes y redes sin utilizar:
+
+```py
+docker system prune -a
+```
