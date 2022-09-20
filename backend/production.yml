@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   api:
-    container_name: dev_api_songs
+    container_name: prod_api_songs
     restart: always
     build:
       context: .
@@ -16,13 +16,13 @@ services:
       - postgres
 
   postgres:
-    container_name: dev_db_songs
+    container_name: prod_db_songs
     image: postgres:14-alpine
     restart: always
     env_file:
       - ./.env
     volumes:
-      - songs_postgres_db:/var/lib/postgresql/data
+      - prod_songs_postgres_db:/var/lib/postgresql/data
 
 volumes:
-  songs_postgres_db:
+  prod_songs_postgres_db:
