@@ -11,18 +11,24 @@ const About = () => {
           CSS. At Backend level I work with NodeJS and Python. For databases I
           have done projects using MongoDB and Postgres.
         </p>
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center space-y-2">
           <a
-            className="hover:underline hover:text-gray-600"
+            className="px-4 py-2 rounded-md bg-gray-400 hover:text-white  hover:shadow-md"
             href="https://www.linkedin.com/in/alejandroruizm/"
           >
             Linkedin
           </a>
           <a
-            className="hover:underline hover:text-gray-600"
+            className="px-4 py-2 rounded-md bg-gray-400 hover:text-white  hover:shadow-md"
             href="https://github.com/kannder83/filter-song"
           >
             Github
+          </a>
+          <a
+            className="px-4 py-2 rounded-md bg-gray-400 hover:text-white  hover:shadow-md"
+            href="https://kannder83.com/api/filter-song"
+          >
+            API Documentation
           </a>
         </div>
       </div>
