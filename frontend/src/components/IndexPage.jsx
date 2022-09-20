@@ -1,62 +1,30 @@
-import React, { useReducer } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 
-const initialState = () => ({
-  countPages: 1,
-  maxCount: 0,
-  incrementBy: 0,
-});
-
-const reducer = (state = initialState(), action = {}) => {
-  if (action.type === "NEXT_PAGE") {
-    if (state.countPages < action.maxCount) {
-      return {
-        ...state,
-        maxCount: action.maxCount,
-        incrementBy: state.incrementBy + action.incrementBy,
-        countPages: state.countPages + 1,
-      };
-    }
-    return { ...state };
-  }
-  if (action.type === "PREVIOUS_PAGE") {
-    if (state.countPages > 1) {
-      return {
-        ...state,
-        maxCount: action.maxCount,
-        incrementBy: state.incrementBy - action.incrementBy,
-        countPages: state.countPages - 1,
-      };
-    }
-    return { ...state };
-  }
-  return state;
-};
 
 const IndexPage = ({ pageIndex, getAllSongs }) => {
-  const [state, dispatch] = useReducer(reducer, reducer());
+  const [count, setCount] = useState(0);
+  const [countPages, setCountPages] = useState(1);
+
 
   const increment = () => {
-    dispatch({
-      type: "NEXT_PAGE",
-      maxCount: pageIndex.pages,
-      incrementBy: pageIndex.rows_per_page,
-    });
-    // getAllSongs(state.incrementBy, 10);
+    if (count < pageIndex.pages) {
+      setCount(count + 10);
+      setCountPages(countPages + 1)
+    }
   };
 
   const decrement = () => {
-    // getAllSongs(state.incrementBy, 10);
-    dispatch({
-      type: "PREVIOUS_PAGE",
-      maxCount: pageIndex.pages,
-      incrementBy: pageIndex.rows_per_page,
-    });
+    if (count > 0) {
+      setCount(count - 10);
+      setCountPages(countPages - 1)
+    }
   };
 
+
   useEffect(() => {
-    getAllSongs(state.incrementBy);
-  }, [state]);
+    getAllSongs(count);
+  }, [count]);
 
   return (
     <div className="w-full">
@@ -68,7 +36,7 @@ const IndexPage = ({ pageIndex, getAllSongs }) => {
           Previous
         </button>
         <p className="w-3/12 text-center px-2 py-1 bg-gray-300 rounded-md">
-          Pages: {state.countPages} of {pageIndex.pages}
+          Pages: {countPages} of {pageIndex.pages}
         </p>
         <button
           onClick={increment}

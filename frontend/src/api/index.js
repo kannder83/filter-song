@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8000/apiv1",
+  // baseURL: "http://localhost:8000",
+  baseURL: "https://kannder83.com/api/filter-song",
 });
 
 const get = async (url) => {
@@ -9,10 +10,6 @@ const get = async (url) => {
     const result = await instance.get(url);
     return result.data;
   } catch (error) {
-    // throw {
-    //   error: "Not Available",
-    //   data: error.response.data,
-    // };
     throw error.response.data.detail;
   }
 };

@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
 import { get } from "../api";
 import { Errors } from "./Errors";
-import { IndexPage } from "./IndexPage";
+import { InputRadio } from "./InputRadio";
+
 
 const Search = ({ setSongs }) => {
   const search = useRef();
+  const [searchOption, setSearchOption] = useState("title")
 
   const [errors, setErrors] = useState({
     isErrors: false,
@@ -13,9 +15,12 @@ const Search = ({ setSongs }) => {
 
   const searchBy = (event) => {
     event.preventDefault();
-    if (event.target.value === undefined) {
+
+
+
+    if (searchOption === "title") {
       URL = `/title/${search.current.value}`;
-    } else if (event.target.value === "artist") {
+    } else if (searchOption === "artist") {
       URL = `/artist/${search.current.value}`;
     } else {
       URL = `/genre/${search.current.value}`;
@@ -42,30 +47,18 @@ const Search = ({ setSongs }) => {
 
   return (
     <div className="w-full p-2 bg-gray-300 border rounded-md shadow-md">
-      <form onSubmit={searchBy}>
+      <form onSubmit={searchBy} className="w-full flex space-x-2">
         <input
-          className="w-full px-4 py-2 my-2 shadow-md bg-gray-50 border border-gray-100 rounded-xl outline-none"
+          className="w-full px-4 py-2 shadow-md bg-gray-50 border border-gray-100 rounded-xl outline-none"
           type="text"
           name="search"
           placeholder="Search"
           ref={search}
         />
+        <button className="px-4 py-2 rounded-xl bg-amber-200 shadow-md hover:bg-amber-300/60 transition-all delay-750">Search</button>
       </form>
-      <div className="w-full p-1 flex justify-end space-x-1">
-        <button
-          onClick={searchBy}
-          className="px-4 py-2 shadow-md bg-gray-100  hover:bg-gray-200 rounded-xl"
-          value="artist"
-        >
-          Artist
-        </button>
-        <button
-          onClick={searchBy}
-          className="px-4 py-2  shadow-md bg-gray-100 hover:bg-gray-200 rounded-xl"
-          value="genre"
-        >
-          Genre
-        </button>
+      <div className="w-full mt-2 p-1 flex justify-end space-x-1">
+        <InputRadio searchOption={searchOption} setSearchOption={setSearchOption} />
       </div>
       <Errors errors={errors} />
     </div>
